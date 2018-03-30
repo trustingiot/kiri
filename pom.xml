@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.kura.kiri</groupId>
+	<artifactId>kiri</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>org.eclipse.kura.kiri</module>
+		<module>org.eclipse.kura.kiri.feature</module>
+	</modules>
+
+	<properties>
+		<tycho-version>0.26.0</tycho-version>
+		<tycho-extras-version>0.26.0</tycho-extras-version>
+		<tycho.scmUrl>scm:git:ssh://github.com/eclipse/kura/kura</tycho.scmUrl>
+		<kura.basedir>${project.basedir}/../kura/kura</kura.basedir>
+	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>repo.eclipse.org</id>
+			<name>Eclipse Kura Repository - Releases</name>
+			<url>https://repo.eclipse.org/content/repositories/kura-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>repo.eclipse.org</id>
+			<name>Eclipse Kura Repository - Snapshots</name>
+			<url>https://repo.eclipse.org/content/repositories/kura-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<property>
+					<name>!kura.osgi</name>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>p2-repo-equinox_3.11.1</id>
+					<layout>p2</layout>
+					<url>file:///${kura.basedir}/target-definition/equinox_3.11.1/repository/</url>
+				</repository>
+			</repositories>
+			<properties>
+				<tycho.localArtifacts>ignore</tycho.localArtifacts>
+			</properties>
+		</profile>
+	</profiles>
+
+	<repositories>
+		<repository>
+			<id>p2-repo-common</id>
+			<layout>p2</layout>
+			<url>file:///${kura.basedir}/target-definition/common/repository/</url>
+		</repository>
+		<repository>
+			<id>kura_addons</id>
+			<name>Eclipse Kura Addons Maven Repository</name>
+			<url>https://raw.github.com/eurotech/kura_addons/mvn-repo/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>repo.eclipse.org</id>
+			<name>Eclipse Kura Repository - Releases</name>
+			<url>https://repo.eclipse.org/content/repositories/kura-releases/</url>
+		</repository>
+		<repository>
+			<id>eclipse.neon</id>
+			<url>http://download.eclipse.org/releases/oxygen</url>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
+
+	<build>
+
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.3</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.1</version>
+				<configuration>
+					<findbugsXmlOutput>true</findbugsXmlOutput>
+					<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+					<xmlOutput>true</xmlOutput>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<!-- make us aware of warnings -->
+					<showWarnings>true</showWarnings>
+					<!-- Kura does not set bootdelegation, we let the compiler check for 
+						this -->
+					<requireJREPackageImports>true</requireJREPackageImports>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<sourceReferences>
+						<generate>true</generate>
+					</sourceReferences>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-buildtimestamp-jgit</artifactId>
+						<version>${tycho-extras-version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-sourceref-jgit</artifactId>
+						<version>${tycho-version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>all</ws>
+							<arch>all</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>de.dentrassi.maven</groupId>
+					<artifactId>osgi-dp</artifactId>
+					<version>0.3.0</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
+</project>
