@@ -13,7 +13,12 @@
 	<modules>
 		<module>org.eclipse.kura.kiri</module>
 		<module>org.eclipse.kura.kiri.iri</module>
-		<module>org.eclipse.kura.kiri.feature</module>
+
+		<module>org.eclipse.kura.kiri.rocksdb.jni</module>
+		<module>org.eclipse.kura.kiri.feature.jni</module>
+
+		<module>org.eclipse.kura.kiri.rocksdb.armv7a</module>
+		<module>org.eclipse.kura.kiri.feature.armv7a</module>
 	</modules>
 
 	<properties>
