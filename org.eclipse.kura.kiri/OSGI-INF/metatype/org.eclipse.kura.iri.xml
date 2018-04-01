@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.2.0" localization="en_us">
+	<OCD id="org.eclipse.kura.iri"
+		name="IRI"
+		description="IOTA Reference Implementation">
+
+		<Icon resource="resources/icons/iri.png" size="32"/>
+
+		<AD id="enable"
+			name="Enable"
+			type="Boolean"
+			cardinality="0"
+			required="true"
+			default="false"
+			description="Enable IRI"/>
+
+		<AD id="port"
+			name="API port"
+			type="Integer"
+			cardinality="0"
+			required="true"
+			default="14700"
+			description="Port to be used to send API commands to your node"/>
+
+		<AD id="udp.port"
+			name="UDP receiver port"
+			type="Integer"
+			cardinality="0"
+			required="true"
+			default="14600"
+			description="UDP receiver port"/>
+
+		<AD id="tcp.port"
+			name="TCP receiver port"
+			type="Integer"
+			cardinality="0"
+			required="true"
+			default="14600"
+			description="TCP receiver port"/>
+
+		<AD id="send.limit"
+			name="Outbound bandwidth consumption"
+			type="String"
+			cardinality="0"
+			required="true"
+			default="1.0"
+			description="Limit the outbound bandwidth consumption. Limit is set to mbit/s"/>
+
+		<AD id="max.peers"
+			name="Max accepted peers"
+			type="Integer"
+			cardinality="0"
+			required="true"
+			default="8"
+			description="Limit the number of max accepted peers"/>
+
+	</OCD>
+
+	<Designate pid="org.eclipse.kura.iri">
+		<Object ocdref="org.eclipse.kura.iri"/>
+	</Designate>
+</MetaData>

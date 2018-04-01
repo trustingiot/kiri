@@ -1,0 +1,10 @@
+/bin/
+/target/
+/resources/iri/
+/lib/
+/src/
+logback.xml
+previousEpochsSpentAddresses.*
+Snapshot.*
+!/resources/base/*
+/resources/base/Snapshot.*

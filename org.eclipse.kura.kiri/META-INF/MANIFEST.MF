@@ -4,3 +4,11 @@ Bundle-Name: kiri
 Bundle-SymbolicName: org.eclipse.kura.kiri
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.eclipse.kura.kiri
+Service-Component: OSGI-INF/*.xml
+Import-Package: com.iota.iri,
+ com.iota.iri.service,
+ org.eclipse.kura.configuration,
+ org.osgi.service.component,
+ org.slf4j
+Bundle-ActivationPolicy: lazy
