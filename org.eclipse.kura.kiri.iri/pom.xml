@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.eclipse.kura.kiri</groupId>
+		<artifactId>kiri</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<artifactId>org.eclipse.kura.kiri.iri</artifactId>
+	<packaging>eclipse-plugin</packaging>
+
+	<properties>
+		<java-version>1.8</java-version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<kura.basedir>${project.basedir}/../../kura/kura</kura.basedir>
+		<undertow.version>1.4.6.Final</undertow.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+		<repository>
+			<id>jBoss</id>
+			<url>https://repository.jboss.org</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>download-sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.github.javiEstrella</groupId>
+									<artifactId>iri</artifactId>
+									<version>v1.4.2.2.src</version>
+									<classifier>sources</classifier>
+								</artifactItem>
+							</artifactItems>
+							<stripVersion>true</stripVersion>
+							<outputDirectory>resources/iri</outputDirectory>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>download-libs</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.bouncycastle</groupId>
+									<artifactId>bcprov-jdk15on</artifactId>
+									<version>1.58</version>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>org.apache.commons</groupId>
+									<artifactId>commons-lang3</artifactId>
+									<version>3.5</version>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>ch.qos.logback</groupId>
+									<artifactId>logback-classic</artifactId>
+									<version>1.2.3</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>ch.qos.logback</groupId>
+									<artifactId>logback-core</artifactId>
+									<version>1.2.3</version>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>commons-io</groupId>
+									<artifactId>commons-io</artifactId>
+									<version>2.5</version>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>com.google.code.gson</groupId>
+									<artifactId>gson</artifactId>
+									<version>2.8.1</version>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>io.undertow</groupId>
+									<artifactId>undertow-core</artifactId>
+									<version>${undertow.version}</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>io.undertow</groupId>
+									<artifactId>undertow-servlet</artifactId>
+									<version>${undertow.version}</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>io.undertow</groupId>
+									<artifactId>undertow-websockets-jsr</artifactId>
+									<version>${undertow.version}</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.jboss.logging</groupId>
+									<artifactId>jboss-logging</artifactId>
+									<version>3.2.1.Final</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.jboss.xnio</groupId>
+									<artifactId>xnio-api</artifactId>
+									<version>3.3.6.Final</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.jboss.xnio</groupId>
+									<artifactId>xnio-nio</artifactId>
+									<version>3.3.6.Final</version>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>com.sanityinc</groupId>
+									<artifactId>jargs</artifactId>
+									<version>2.0-SNAPSHOT</version>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>org.zeromq</groupId>
+									<artifactId>jeromq</artifactId>
+									<version>0.4.3</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.zeromq</groupId>
+									<artifactId>jnacl</artifactId>
+									<version>0.1.0</version>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>org.ini4j</groupId>
+									<artifactId>ini4j</artifactId>
+									<version>0.5.4</version>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>net.sf.retrotranslator</groupId>
+									<artifactId>retrotranslator-runtime</artifactId>
+									<version>1.2.4</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>backport-util-concurrent</groupId>
+									<artifactId>backport-util-concurrent</artifactId>
+									<version>3.1</version>
+								</artifactItem>
+
+							</artifactItems>
+							<stripVersion>true</stripVersion>
+							<outputDirectory>lib</outputDirectory>
+						</configuration>
+					</execution>
+
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+				<executions>
+					<execution>
+						<id>copy-iri-sources</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>src/com</outputDirectory>
+							<resources>
+								<resource>
+									<directory>resources/iri/com</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>copy-iri-patches</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>src</outputDirectory>
+							<resources>
+								<resource>
+									<directory>resources/patches</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>copy-iri-snapshot</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>resources/base</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

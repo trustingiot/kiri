@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: rocksdb armv7a 5.8.8
+Bundle-SymbolicName: org.eclipse.kura.kiri.rocksdb.armv7a
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: rocksdb-5.8.8-armv7a.jar
+Export-Package: org.rocksdb,
+ org.rocksdb.util
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.eclipse.kura.kiri.rocksdb.armv7a

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
@@ -11,7 +12,13 @@
 
 	<modules>
 		<module>org.eclipse.kura.kiri</module>
-		<module>org.eclipse.kura.kiri.feature</module>
+		<module>org.eclipse.kura.kiri.iri</module>
+
+		<module>org.eclipse.kura.kiri.rocksdb.jni</module>
+		<module>org.eclipse.kura.kiri.feature.jni</module>
+
+		<module>org.eclipse.kura.kiri.rocksdb.armv7a</module>
+		<module>org.eclipse.kura.kiri.feature.armv7a</module>
 	</modules>
 
 	<properties>
@@ -148,6 +155,8 @@
 					<!-- Kura does not set bootdelegation, we let the compiler check for 
 						this -->
 					<requireJREPackageImports>true</requireJREPackageImports>
+					<compilerArgument>-warn:none</compilerArgument>
+					<compilerArgument>-err:none</compilerArgument>
 				</configuration>
 			</plugin>
 
