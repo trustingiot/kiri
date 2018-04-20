@@ -30,7 +30,6 @@ Private IOTA testnet in Kura.
      * tools -> https://github.com/trustingiot/private-iota-testnet.
  * build-snapshot.sh: Create IOTA snapshot.
  * build-dp.sh: Create the deployable packages.
- * coordinator.sh: Create IOTA milestone.
 
 ## Demo
  
