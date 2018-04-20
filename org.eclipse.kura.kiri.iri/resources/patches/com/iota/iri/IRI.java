@@ -70,12 +70,18 @@ public class IRI {
 
         // TODO KIRI
         try {
+            log.info("iota.init() ...");
             iota.init();
-            log.info("iota.init() done.");
+            log.info("iota.init() done");
+
+            log.info("api.init() ...");
             api.init();
-            log.info("api.init() done.");
+            log.info("api.init() done");
+
+            log.info("ixi.init(...) ...");
             ixi.init(configuration.string(Configuration.DefaultConfSettings.IXI_DIR));
-            log.info("ixi.init(...) done.");
+            log.info("ixi.init(...) done");
+
             log.info("IOTA Node initialised correctly.");
         } catch (final Exception e) {
             log.error("Exception during IOTA node initialisation: ", e);
