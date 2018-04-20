@@ -5,6 +5,7 @@
 /src/
 logback.xml
 previousEpochsSpentAddresses.*
-Snapshot.*
+Snapshot.txt
+Snapshot.sig
 !/resources/base/*
 /resources/base/Snapshot.*
