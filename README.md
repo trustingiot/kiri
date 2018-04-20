@@ -61,8 +61,4 @@ Install the DP in your Kura's installation (remember that it is necessary to ope
 
      device$ tail -f /var/log/kura-log # api.init() done
 
-After a few seconds, execute the coordinator to create a IOTA milestone.
-
-     local$ ./coordinator.sh <device> <port> # ./coordinator.sh 192.168.1.100 14700
-
 After that you can use your wallet, log into one of your seeds, and attach addresses until you see your full balance.

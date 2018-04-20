@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.eclipse.kura.configuration.ConfigurableComponent;
+import org.eclipse.kura.kiri.coordinator.PeriodicCoordinator;
 import org.eclipse.kura.kiri.util.ActionRecorder;
 import org.osgi.service.component.ComponentContext;
 
@@ -33,8 +34,9 @@ public class IRIService implements ActionRecorder, ConfigurableComponent {
 	//
 	protected Options options;
 	protected boolean connected;
-	protected ExecutorService worker;
-	protected Future<?> handle;
+	protected ExecutorService iriWorker, coordinatorWorker;
+	protected Future<?> iriHandle, coordinatorHandle;
+	protected PeriodicCoordinator coordinator;
 
 	////
 	//
@@ -70,17 +72,55 @@ public class IRIService implements ActionRecorder, ConfigurableComponent {
 	}
 
 	protected void update(Map<String, Object> properties) {
-		shutdownIRI();
+		shutdownWorkers();
 		createOptions(properties);
-		startIRI();
+		startWorkers();
 	}
 
 	protected void deactivate() {
-		shutdownIRI();
+		shutdownWorkers();
 	}
 
 	protected void createOptions(Map<String, Object> properties) {
 		options = new Options(properties);
+	}
+
+	protected void shutdownWorkers() {
+		if (coordinatorHandle != null) {
+			shutdownCoordinator();
+			coordinatorHandle.cancel(true);
+			coordinatorWorker = null;
+		}
+
+		if (coordinatorWorker != null) {
+			coordinatorWorker.shutdown();
+			coordinatorWorker = null;
+		}
+
+		if (iriHandle != null) {
+			shutdownIRI();
+			iriHandle.cancel(true);
+			iriHandle = null;
+		}
+
+		if (iriWorker != null) {
+			iriWorker.shutdown();
+			iriWorker = null;
+		}
+	}
+
+	private void shutdownCoordinator() {
+		if (connected) {
+			info("Shutting down IOTA coordinator, please hold tight...");
+			try {
+				if (coordinator != null) {
+					coordinator.stop();
+				}
+				info("Shut down IOTA coordinator");
+			} catch (final Exception e) {
+				error("Exception occurred shutting down IOTA coordinator: ", e);
+			}
+		}
 	}
 
 	private void shutdownIRI() {
@@ -97,23 +137,13 @@ public class IRIService implements ActionRecorder, ConfigurableComponent {
 		}
 	}
 
-	protected void shutdownWorker() {
-		if (handle != null) {
-			shutdownIRI();
-			handle.cancel(true);
-			handle = null;
-		}
-
-		if (worker != null) {
-			worker.shutdown();
-			worker = null;
-		}
-	}
-
-	private void startIRI() {
+	protected void startWorkers() {
 		if (options.isEnable()) {
-			worker = Executors.newSingleThreadExecutor();
-			handle = worker.submit(this::setupIRI);
+			iriWorker = Executors.newSingleThreadExecutor();
+			iriHandle = iriWorker.submit(this::setupIRI);
+
+			coordinatorWorker = Executors.newSingleThreadExecutor();
+			coordinatorHandle = coordinatorWorker.submit(this::setupCoordinator);
 		}
 	}
 
@@ -131,7 +161,16 @@ public class IRIService implements ActionRecorder, ConfigurableComponent {
 			IRI.main(args);
 		} catch (IOException e) {
 			connected = false;
-			handle = null;
+			iriHandle = null;
+			error("Fail", e);
+		}
+	}
+
+	private void setupCoordinator() {
+		try {
+			coordinator = new PeriodicCoordinator(options.getPort().toString(), options.getCoordinatorInterval());
+		} catch (Exception e) {
+			coordinatorHandle = null;
 			error("Fail", e);
 		}
 	}

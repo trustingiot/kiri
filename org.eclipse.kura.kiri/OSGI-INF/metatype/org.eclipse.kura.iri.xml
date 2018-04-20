@@ -54,6 +54,14 @@
 			default="8"
 			description="Limit the number of max accepted peers"/>
 
+		<AD id="coordinator.interval"
+			name="Interval (seconds) for issuing new milestones"
+			type="Integer"
+			cardinality="0"
+			required="true"
+			default="60"
+			description="Interval (seconds) for issuing new milestones"/>
+
 	</OCD>
 
 	<Designate pid="org.eclipse.kura.iri">
