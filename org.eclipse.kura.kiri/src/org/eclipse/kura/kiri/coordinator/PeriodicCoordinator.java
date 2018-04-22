@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.eclipse.kura.kiri.util.Loggable;
 
+import com.iota.iri.IRI;
+
 import jota.IotaAPI;
 import jota.dto.response.GetAttachToTangleResponse;
 import jota.dto.response.GetNodeInfoResponse;
@@ -21,7 +23,7 @@ import jota.utils.Converter;
  * Copy & adapted from https://github.com/schierlm/private-iota-testnet
  */
 public class PeriodicCoordinator implements Loggable {
-	
+
 	public static final String NULL_HASH = "999999999999999999999999999999999999999999999999999999999999999999999999999999999";
 	public static final String TESTNET_COORDINATOR_ADDRESS = "XNZBYAST9BETSDNOVQKKTBECYIPMF9IPOZRWUPFQGVH9HJW9NDSQVIPVBWU9YKECRYGDSJXYMZGHZDXCA";
 	public static final String NULL_ADDRESS = "999999999999999999999999999999999999999999999999999999999999999999999999999999999";
@@ -32,6 +34,7 @@ public class PeriodicCoordinator implements Loggable {
 	private Integer interval;
 	private ScheduledExecutorService executor;
 	private IotaAPI api;
+	private boolean shutdown;
 
 	private PeriodicCoordinator() {
 		super();
@@ -44,26 +47,31 @@ public class PeriodicCoordinator implements Loggable {
 		this.port = port;
 		this.interval = interval;
 		this.api = new IotaAPI.Builder().host(host).port(this.port).build();
+		this.shutdown = false;
 
 		generateMilestone();
 	}
 
 	protected void generateMilestone() {
-		try {
-			GetNodeInfoResponse nodeInfo = api.getNodeInfo();
-			int updatedMilestone = nodeInfo.getLatestMilestoneIndex() + 1;
-			if (nodeInfo.getLatestMilestone().equals(NULL_HASH)) {
-				newMilestone(api, NULL_HASH, NULL_HASH, updatedMilestone);
-			} else {
-				GetTransactionsToApproveResponse x = api.getTransactionsToApprove(10);
-				newMilestone(api, x.getTrunkTransaction(), x.getBranchTransaction(), updatedMilestone);
+		if (!shutdown) {
+			if (IRI.isInitialized()) {
+				try {
+					GetNodeInfoResponse nodeInfo = api.getNodeInfo();
+					int updatedMilestone = nodeInfo.getLatestMilestoneIndex() + 1;
+					if (nodeInfo.getLatestMilestone().equals(NULL_HASH)) {
+						newMilestone(api, NULL_HASH, NULL_HASH, updatedMilestone);
+					} else {
+						GetTransactionsToApproveResponse x = api.getTransactionsToApprove(10);
+						newMilestone(api, x.getTrunkTransaction(), x.getBranchTransaction(), updatedMilestone);
+					}
+					info("New milestone " + updatedMilestone + " created.");
+				} catch (Exception e) {
+					error(e.getLocalizedMessage(), e);
+				}
 			}
-			info("New milestone " + updatedMilestone + " created.");
-		} catch (Exception e) {
-			error(e.getLocalizedMessage(), e);
-		}
 
-		executor.schedule(this::generateMilestone, interval, TimeUnit.SECONDS);
+			executor.schedule(this::generateMilestone, interval, TimeUnit.SECONDS);
+		}
 	}
 
 	static void newMilestone(IotaAPI api, String tip1, String tip2, long index) throws Exception {
@@ -73,19 +81,21 @@ public class PeriodicCoordinator implements Loggable {
 		bundle.addEntry(1, TESTNET_COORDINATOR_ADDRESS, 0, tag, timestamp);
 		bundle.addEntry(1, NULL_ADDRESS, 0, tag, timestamp);
 		bundle.finalize(null);
-		bundle.addTrytes(Collections.<String> emptyList());
+		bundle.addTrytes(Collections.<String>emptyList());
 		List<String> trytes = new ArrayList<>();
 		for (Transaction trx : bundle.getTransactions()) {
 			trytes.add(trx.toTrytes());
 		}
 		Collections.reverse(trytes);
-		GetAttachToTangleResponse rrr = api.attachToTangle(tip1, tip2, 13, (String[]) trytes.toArray(new String[trytes.size()]));
+		GetAttachToTangleResponse rrr = api.attachToTangle(tip1, tip2, 13,
+				(String[]) trytes.toArray(new String[trytes.size()]));
 		api.storeTransactions(rrr.getTrytes());
 		api.broadcastTransactions(rrr.getTrytes());
 	}
 
 	public void stop() {
 		if (executor != null) {
+			shutdown = true;
 			executor.shutdown();
 			executor = null;
 		}
