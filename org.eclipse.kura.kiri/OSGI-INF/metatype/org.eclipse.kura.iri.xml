@@ -59,7 +59,7 @@
 			type="Integer"
 			cardinality="0"
 			required="true"
-			default="60"
+			default="120"
 			description="Interval (seconds) for issuing new milestones"/>
 
 	</OCD>

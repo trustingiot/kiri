@@ -21,7 +21,7 @@ public class Options extends org.eclipse.kura.kiri.util.Options {
 	public static final Integer PROPERTY_TCP_PORT_DEFAULT = 14600;
 	public static final String PROPERTY_SEND_LIMIT_DEFAULT = "1.0";
 	public static final Integer PROPERTY_MAX_PEERS_DEFAULT = 8;
-	public static final Integer PROPERTY_COORDINATOR_INTERVAL_DEFAULT = 60;
+	public static final Integer PROPERTY_COORDINATOR_INTERVAL_DEFAULT = 120;
 
 	protected final boolean enable;
 	protected final Integer port;
