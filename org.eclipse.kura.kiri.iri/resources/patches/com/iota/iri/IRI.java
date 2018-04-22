@@ -85,7 +85,8 @@ public class IRI {
             log.info("api.init() done");
 
             log.info("ixi.init(...) ...");
-            ixi.init(configuration.string(Configuration.DefaultConfSettings.IXI_DIR));
+            log.info("IXI service is not enabled");
+            // ixi.init(configuration.string(Configuration.DefaultConfSettings.IXI_DIR));
             initializedIXI= true;
             log.info("ixi.init(...) done");
 
@@ -279,7 +280,7 @@ public class IRI {
             try {
                 if (initializedIXI) {
                     initializedIXI= false;
-                    ixi.shutDown();
+                    // ixi.shutDown();
                 }
 
                 if (initializedAPI) {
