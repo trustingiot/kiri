@@ -98,7 +98,7 @@ public class IRIService implements ActionRecorder, ConfigurableComponent {
 		}
 
 		if (iriHandle != null) {
-			shutdownIRI();
+			IRI.stop();
 			iriHandle.cancel(true);
 			iriHandle = null;
 		}
@@ -115,25 +115,12 @@ public class IRIService implements ActionRecorder, ConfigurableComponent {
 			try {
 				if (coordinator != null) {
 					coordinator.stop();
+					coordinator = null;
 				}
 				info("Shut down IOTA coordinator");
 			} catch (final Exception e) {
 				error("Exception occurred shutting down IOTA coordinator: ", e);
 			}
-		}
-	}
-
-	private void shutdownIRI() {
-		if (connected) {
-			info("Shutting down IOTA node, please hold tight...");
-			try {
-				IRI.ixi.shutdown();
-				IRI.api.shutDown();
-				IRI.iota.shutdown();
-			} catch (final Exception e) {
-				error("Exception occurred shutting down IOTA node: ", e);
-			}
-			connected = false;
 		}
 	}
 

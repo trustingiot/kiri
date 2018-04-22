@@ -31,6 +31,10 @@ public class IRI {
     public static Iota iota;
     public static API api;
     public static IXI ixi;
+    // TODO kiri
+    public static boolean initializedIOTA = false;
+    public static boolean initializedAPI = false;
+    public static boolean initializedIXI = false;
     public static Configuration configuration;
 
     public static void main(final String[] args) throws IOException {
@@ -72,29 +76,29 @@ public class IRI {
         try {
             log.info("iota.init() ...");
             iota.init();
+            initializedIOTA = true;
             log.info("iota.init() done");
 
             log.info("api.init() ...");
             api.init();
+            initializedAPI = true;
             log.info("api.init() done");
 
             log.info("ixi.init(...) ...");
             ixi.init(configuration.string(Configuration.DefaultConfSettings.IXI_DIR));
+            initializedIXI= true;
             log.info("ixi.init(...) done");
 
             log.info("IOTA Node initialised correctly.");
         } catch (final Exception e) {
             log.error("Exception during IOTA node initialisation: ", e);
-            // System.exit(-1);
-            log.info("Shutting down IOTA node, please hold tight...");
-            try {
-                ixi.shutdown();
-                api.shutDown();
-                iota.shutdown();
-            } catch (final Exception ex) {
-                log.error("Exception occurred shutting down IOTA node: ", ex);
-            }
+            stop();
         }
+    }
+
+    // TODO kiri
+    public static boolean isInitialized() {
+        return initializedAPI && initializedIOTA && initializedIXI;
     }
 
     private static void validateParams(final Configuration configuration, final String[] args) throws IOException {
@@ -266,5 +270,30 @@ public class IRI {
                 log.error("Exception occurred shutting down IOTA node: ", e);
             }
         }, "Shutdown Hook"));
+    }
+
+    // TODO kiri
+    public static void stop() {
+        if (initializedAPI || initializedIOTA || initializedIXI) {
+            log.info("Shutting down IOTA node, please hold tight...");
+            try {
+                if (initializedIXI) {
+                    initializedIXI= false;
+                    ixi.shutDown();
+                }
+
+                if (initializedAPI) {
+                    initializedAPI = false;
+                    api.shutDown();
+                }
+
+                if (initializedIOTA) {
+                    initializedIOTA = false;
+                    iota.shutdown();
+                }
+            } catch (final Exception e) {
+                log.error("Exception occurred shutting down IOTA node: ", e);
+            }
+        }
     }
 }
