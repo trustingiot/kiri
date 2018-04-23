@@ -1,0 +1,16 @@
+--- src/com/iota/iri/network/replicator/ReplicatorSourcePool.java
++++ src/com/iota/iri/network/replicator/ReplicatorSourcePool.java
+@@ -73,8 +73,11 @@
+     public void shutdown() throws InterruptedException {
+         shutdown = true;
+         //notify();
+-        pool.shutdown();
+-        pool.awaitTermination(6, TimeUnit.SECONDS);
++        // TODO kiri
++        if (pool != null) {
++            pool.shutdown();
++            pool.awaitTermination(6, TimeUnit.SECONDS);
++        }
+     }
+ 
+     public ReplicatorSourcePool init(int port) {

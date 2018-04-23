@@ -1,4 +1,6 @@
 /bin/
+/resources/jota/
+/resources/patches/src/
 /target/
 /src/
 /lib/

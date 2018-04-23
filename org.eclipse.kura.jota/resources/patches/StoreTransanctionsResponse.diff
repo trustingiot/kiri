@@ -1,0 +1,13 @@
+--- src/jota/dto/response/StoreTransactionsResponse.java
++++ src/jota/dto/response/StoreTransactionsResponse.java
+@@ -5,6 +5,10 @@
+  **/
+ public class StoreTransactionsResponse extends AbstractResponse {
+ 
++    // FIXME Jura patch
++    public StoreTransactionsResponse() {
++    }
++
+     /**
+      * Initializes a new instance of the StoreTransactionsResponse class.
+      */

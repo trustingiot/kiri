@@ -194,6 +194,30 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>apply-patches</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<exec
+									dir="${project.basedir}/resources/patches"
+									executable="${project.basedir}/resources/patches/apply-patches.sh">
+									<arg value="../iri"/>
+								</exec>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>3.0.2</version>
 				<executions>
@@ -207,33 +231,15 @@
 							<outputDirectory>src/com</outputDirectory>
 							<resources>
 								<resource>
-									<directory>resources/iri/com</directory>
+									<directory>resources/patches/src/com</directory>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
 						</configuration>
 					</execution>
-
-					<execution>
-						<id>copy-iri-patches</id>
-						<phase>process-sources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>src</outputDirectory>
-							<resources>
-								<resource>
-									<directory>resources/patches</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-
 					<execution>
 						<id>copy-iri-snapshot</id>
-						<phase>process-sources</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
@@ -249,8 +255,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
-
 </project>
