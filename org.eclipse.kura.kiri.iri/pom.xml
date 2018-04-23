@@ -194,12 +194,36 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>apply-patches</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<exec
+									dir="${project.basedir}/resources/patches"
+									executable="${project.basedir}/resources/patches/apply-patches.sh">
+									<arg value="../iri"/>
+								</exec>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>3.0.2</version>
 				<executions>
 					<execution>
 						<id>copy-iri-sources</id>
-						<phase>generate-sources</phase>
+						<phase>process-sources</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
@@ -207,7 +231,7 @@
 							<outputDirectory>src/com</outputDirectory>
 							<resources>
 								<resource>
-									<directory>resources/iri/com</directory>
+									<directory>resources/patches/src/com</directory>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -231,28 +255,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-patch-plugin</artifactId>
-				<version>1.2</version>
-				<configuration>
-					<targetDirectory>${project.basedir}</targetDirectory>
-					<skipApplication>false</skipApplication>
-				</configuration>
-				<executions>
-					<execution>
-						<id>patch-iri</id>
-						<goals>
-							<goal>apply</goal>
-						</goals>
-						<configuration>
-							<patchDirectory>resources/patches</patchDirectory>
-							<naturalOrderProcessing>true</naturalOrderProcessing>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 
 		<pluginManagement>
@@ -271,18 +273,17 @@
 											org.apache.maven.plugins
 										</groupId>
 										<artifactId>
-											maven-patch-plugin
+											maven-antrun-plugin
 										</artifactId>
 										<versionRange>
-											[1.2,)
+											[1.8,)
 										</versionRange>
 										<goals>
-											<goal>apply</goal>
+											<goal>run</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<execute>
-										</execute>
+										<execute></execute>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>

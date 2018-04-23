@@ -1,6 +1,7 @@
 /bin/
 /target/
 /resources/iri/
+/resources/patches/src/
 /lib/
 /src/
 logback.xml
