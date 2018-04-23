@@ -1,0 +1,13 @@
+--- src/jota/dto/response/GetAttachToTangleResponse.java
++++ src/jota/dto/response/GetAttachToTangleResponse.java
+@@ -7,6 +7,10 @@
+ 
+     private String[] trytes;
+ 
++    // FIXME Jura patch
++    public GetAttachToTangleResponse() {
++    }
++
+     /**
+      * Initializes a new instance of the GetAttachToTangleResponse class.
+      */
