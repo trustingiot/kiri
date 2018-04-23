@@ -1,0 +1,17 @@
+--- src/com/iota/iri/zmq/MessageQ.java
++++ src/com/iota/iri/zmq/MessageQ.java
+@@ -51,7 +51,12 @@
+             LOG.error("Publisher service shutdown failed.", e);
+         }
+ 
+-        publisher.close();
+-        context.term();
++        // TODO kiri
++        if (publisher != null)
++            publisher.close();
++
++        // TODO kiri
++        if (context != null)
++            context.term();
+     }
+ }

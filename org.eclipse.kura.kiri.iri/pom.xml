@@ -199,7 +199,7 @@
 				<executions>
 					<execution>
 						<id>copy-iri-sources</id>
-						<phase>process-sources</phase>
+						<phase>generate-sources</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
@@ -213,27 +213,9 @@
 							</resources>
 						</configuration>
 					</execution>
-
-					<execution>
-						<id>copy-iri-patches</id>
-						<phase>process-sources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>src</outputDirectory>
-							<resources>
-								<resource>
-									<directory>resources/patches</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-
 					<execution>
 						<id>copy-iri-snapshot</id>
-						<phase>process-sources</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
@@ -250,7 +232,64 @@
 				</executions>
 			</plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-patch-plugin</artifactId>
+				<version>1.2</version>
+				<configuration>
+					<targetDirectory>${project.basedir}</targetDirectory>
+					<skipApplication>false</skipApplication>
+				</configuration>
+				<executions>
+					<execution>
+						<id>patch-iri</id>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+						<configuration>
+							<patchDirectory>resources/patches</patchDirectory>
+							<naturalOrderProcessing>true</naturalOrderProcessing>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
-	</build>
 
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-patch-plugin
+										</artifactId>
+										<versionRange>
+											[1.2,)
+										</versionRange>
+										<goals>
+											<goal>apply</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+										</execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
