@@ -1,0 +1,11 @@
+--- src/com/iota/iri/service/API.java
+--- src/com/iota/iri/service/API.java
+@@ -116,8 +116,6 @@
+     }
+ 
+     public void init() throws IOException {
+-        readPreviousEpochsSpentAddresses();
+-
+         final int apiPort = instance.configuration.integer(DefaultConfSettings.PORT);
+         final String apiHost = instance.configuration.string(DefaultConfSettings.API_HOST);
+ 
