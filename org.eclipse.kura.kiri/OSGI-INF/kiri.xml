@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component
+	xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	activate="activate"
+	deactivate="deactivate"
+	modified="updated"
+	name="org.eclipse.kura.kiri.kiri">
+
+	<implementation class="org.eclipse.kura.kiri.service.provider.kiri.KIRIServiceProvider"/>
+
+	<service>
+		<provide interface="org.eclipse.kura.kiri.service.KIRIService"/>
+		<provide interface="org.eclipse.kura.configuration.ConfigurableComponent"/>
+	</service>
+
+	<property
+		name="service.pid"
+		value="org.eclipse.kura.kiri.kiri"/>
+
+	<reference
+		name="ConfigurationService"
+		policy="static"
+		bind="setConfigurationService"
+		unbind="unsetConfigurationService"
+		cardinality="1..1"
+		interface="org.eclipse.kura.configuration.ConfigurationService"/>
+
+	<reference
+		bind="setCommandService"
+		unbind="unsetCommandService"
+		cardinality="1..1"
+		interface="org.eclipse.kura.command.CommandService"
+		name="CommandService"
+		policy="static" />
+
+	<reference
+		bind="setIRIService"
+		unbind="unsetIRIService"
+		cardinality="1..1"
+		interface="org.eclipse.kura.kiri.service.IRIService"
+		name="IRIService"
+		policy="static" />
+
+</scr:component>

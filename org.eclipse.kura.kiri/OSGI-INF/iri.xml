@@ -4,16 +4,17 @@
 	activate="activate"
 	deactivate="deactivate"
 	modified="updated"
-	name="org.eclipse.kura.iri">
+	name="org.eclipse.kura.kiri.iri">
 
-	<implementation class="org.eclipse.kura.kiri.service.IRIService"/>
+	<implementation class="org.eclipse.kura.kiri.service.provider.iri.IRIServiceProvider"/>
 
 	<service>
+		<provide interface="org.eclipse.kura.kiri.service.IRIService"/>
 		<provide interface="org.eclipse.kura.configuration.ConfigurableComponent"/>
 	</service>
 
 	<property
 		name="service.pid"
-		value="org.eclipse.kura.iri"/>
+		value="org.eclipse.kura.kiri.iri"/>
 
 </scr:component>

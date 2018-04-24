@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.2.0" localization="en_us">
+	<OCD id="org.eclipse.kura.kiri.kiri"
+		name="kIRI"
+		description="Dirty way for invoking Kiri's actions (It'll be replaced by a customized website) ">
+
+		<Icon resource="resources/icons/kiri.png" size="32"/>
+
+		<AD id="clean.installation"
+			name="Clean installation"
+			type="Boolean"
+			cardinality="0"
+			required="true"
+			default="false"
+			description="Clean IRI installation. WARNING: If this option is activated then it invokes an action and it is automatically deactivated."/>
+
+	</OCD>
+
+	<Designate pid="org.eclipse.kura.kiri.kiri">
+		<Object ocdref="org.eclipse.kura.kiri.kiri"/>
+	</Designate>
+</MetaData>

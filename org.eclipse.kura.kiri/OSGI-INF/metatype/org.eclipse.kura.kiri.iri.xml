@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.2.0" localization="en_us">
-	<OCD id="org.eclipse.kura.iri"
+	<OCD id="org.eclipse.kura.kiri.iri"
 		name="IRI"
 		description="IOTA Reference Implementation">
 
@@ -64,7 +64,7 @@
 
 	</OCD>
 
-	<Designate pid="org.eclipse.kura.iri">
-		<Object ocdref="org.eclipse.kura.iri"/>
+	<Designate pid="org.eclipse.kura.kiri.iri">
+		<Object ocdref="org.eclipse.kura.kiri.iri"/>
 	</Designate>
 </MetaData>

@@ -1,4 +1,4 @@
-package org.eclipse.kura.kiri.service;
+package org.eclipse.kura.kiri.service.provider.iri;
 
 import java.util.Map;
 
