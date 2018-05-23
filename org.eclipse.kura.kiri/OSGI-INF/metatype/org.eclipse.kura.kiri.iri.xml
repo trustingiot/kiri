@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.2.0" localization="en_us">
 	<OCD id="org.eclipse.kura.kiri.iri"
-		name="IRI"
+		name="IRI 1.4.2.4"
 		description="IOTA Reference Implementation">
 
 		<Icon resource="resources/icons/iri.png" size="32"/>
@@ -61,6 +61,14 @@
 			required="true"
 			default="120"
 			description="Interval (seconds) for issuing new milestones"/>
+
+		<AD id="mwm"
+			name="Minimum Weight Magnitude"
+			type="Integer"
+			cardinality="0"
+			required="true"
+			default="9"
+			description="Difficulty of the Proof of Work"/>
 
 	</OCD>
 

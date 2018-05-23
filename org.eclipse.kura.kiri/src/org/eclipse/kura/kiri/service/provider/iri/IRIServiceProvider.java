@@ -158,7 +158,9 @@ public class IRIServiceProvider implements IRIService, ActionRecorder, Configura
 			connected = true;
 			String[] args = new String[] {
 					"--testnet",
+					"--testnet-no-coo-validation",
 					"--remote",
+					"--mwm", options.getMWM().toString(),
 					"-p", options.getPort().toString(),
 					"-u", options.getUdpPort().toString(),
 					"-t", options.getTcpPort().toString(),

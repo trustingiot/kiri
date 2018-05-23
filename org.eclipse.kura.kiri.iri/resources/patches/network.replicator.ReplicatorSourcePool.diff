@@ -1,6 +1,6 @@
 --- src/com/iota/iri/network/replicator/ReplicatorSourcePool.java
 +++ src/com/iota/iri/network/replicator/ReplicatorSourcePool.java
-@@ -25,6 +25,7 @@
+@@ -22,6 +22,7 @@
      private static final Logger log = LoggerFactory.getLogger(ReplicatorSourcePool.class);
      private ExecutorService pool;
      private int port;
@@ -8,7 +8,7 @@
  
      public ReplicatorSourcePool(final ReplicatorSinkPool replicatorSinkPool,
                                  final Node node,
-@@ -39,7 +40,6 @@
+@@ -36,7 +37,6 @@
      @Override
      public void run() {
          ExecutorService pool;
@@ -16,18 +16,18 @@
          pool = Executors.newFixedThreadPool(Replicator.NUM_THREADS);
          this.pool = pool;
          try {
-@@ -47,25 +47,31 @@
+@@ -44,25 +44,31 @@
              log.info("TCP replicator is accepting connections on tcp port " + server.getLocalPort());
              while (!shutdown) {
                  try {
 -                    Socket request = server.accept();
 -                    request.setSoLinger(true, 0);
--                    Runnable proc = new ReplicatorSourceProcessor( replicatorSinkPool, request, node, maxPeers, testnet );
+-                    Runnable proc = new ReplicatorSourceProcessor( replicatorSinkPool, request, node, maxPeers, testnet);
 -                    pool.submit(proc);
 +                    if (server != null && !server.isClosed()) {
 +                        Socket request = server.accept();
 +                        request.setSoLinger(true, 0);
-+                        Runnable proc = new ReplicatorSourceProcessor( replicatorSinkPool, request, node, maxPeers, testnet );
++                        Runnable proc = new ReplicatorSourceProcessor( replicatorSinkPool, request, node, maxPeers, testnet);
 +                        pool.submit(proc);
 +                    }
                  } catch (IOException ex) {
@@ -60,7 +60,7 @@
              }
          }
      }
-@@ -73,8 +79,11 @@
+@@ -70,8 +76,11 @@
      public void shutdown() throws InterruptedException {
          shutdown = true;
          //notify();

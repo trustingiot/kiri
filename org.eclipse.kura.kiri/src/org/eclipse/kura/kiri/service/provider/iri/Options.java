@@ -14,6 +14,7 @@ public class Options extends org.eclipse.kura.kiri.util.Options {
 	public static final String PROPERTY_SEND_LIMIT = "send.limit";
 	public static final String PROPERTY_MAX_PEERS = "max.peers";
 	public static final String PROPERTY_COORDINATOR_INTERVAL = "coordinator.interval";
+	public static final String PROPERTY_MWM = "mwm";
 
 	public static final boolean PROPERTY_ENABLE_DEFAULT = false;
 	public static final Integer PROPERTY_PORT_DEFAULT = 14700;
@@ -22,6 +23,7 @@ public class Options extends org.eclipse.kura.kiri.util.Options {
 	public static final String PROPERTY_SEND_LIMIT_DEFAULT = "1.0";
 	public static final Integer PROPERTY_MAX_PEERS_DEFAULT = 8;
 	public static final Integer PROPERTY_COORDINATOR_INTERVAL_DEFAULT = 120;
+	public static final Integer PROPERTY_MWM_DEFAULT = 9;
 
 	protected final boolean enable;
 	protected final Integer port;
@@ -30,6 +32,7 @@ public class Options extends org.eclipse.kura.kiri.util.Options {
 	protected final String sendLimit;
 	protected final Integer maxPeers;
 	protected final Integer coordinatorInterval;
+	protected final Integer mwm;
 
 	public Options(Map<String, Object> properties) {
 		super(properties);
@@ -40,6 +43,7 @@ public class Options extends org.eclipse.kura.kiri.util.Options {
 		sendLimit = read(PROPERTY_SEND_LIMIT, PROPERTY_SEND_LIMIT_DEFAULT);
 		maxPeers = read(PROPERTY_MAX_PEERS, PROPERTY_MAX_PEERS_DEFAULT);
 		coordinatorInterval = read(PROPERTY_COORDINATOR_INTERVAL, PROPERTY_COORDINATOR_INTERVAL_DEFAULT);
+		mwm = read(PROPERTY_MWM, PROPERTY_MWM_DEFAULT);
 	}
 
 	public boolean isEnable() {
@@ -68,5 +72,9 @@ public class Options extends org.eclipse.kura.kiri.util.Options {
 
 	public Integer getCoordinatorInterval() {
 		return coordinatorInterval;
+	}
+
+	public Integer getMWM() {
+		return mwm;
 	}
 }

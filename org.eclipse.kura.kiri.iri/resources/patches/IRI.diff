@@ -1,6 +1,6 @@
 --- src/com/iota/iri/IRI.java
 +++ src/com/iota/iri/IRI.java
-@@ -31,6 +31,10 @@
+@@ -28,6 +28,10 @@
      public static Iota iota;
      public static API api;
      public static IXI ixi;
@@ -9,9 +9,9 @@
 +    public static boolean initializedAPI = false;
 +    public static boolean initializedIXI = false;
      public static Configuration configuration;
+     private static final String TESTNET_FLAG_REQUIRED = "--testnet flag must be turned on to use ";
  
-     public static void main(final String[] args) throws IOException {
-@@ -40,7 +44,6 @@
+@@ -38,7 +42,6 @@
          iota = new Iota(configuration);
          ixi = new IXI(iota);
          api = new API(iota, ixi);
@@ -19,7 +19,7 @@
  
          if (configuration.booling(DefaultConfSettings.DEBUG)) {
              log.info("You have set the debug flag. To enable debug output, you need to uncomment the DEBUG appender in the source tree at iri/src/main/resources/logback.xml and re-package iri.jar");
-@@ -69,15 +72,34 @@
+@@ -67,15 +70,34 @@
              }
          }
  
@@ -56,8 +56,8 @@
 +        return initializedAPI && initializedIOTA && initializedIXI;
      }
  
-     private static void validateParams(final Configuration configuration, final String[] args) throws IOException {
-@@ -250,4 +272,29 @@
+     public static void validateParams(final Configuration configuration, final String[] args) throws IOException {
+@@ -326,4 +348,29 @@
              }
          }, "Shutdown Hook"));
      }

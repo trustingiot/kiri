@@ -1,6 +1,6 @@
 --- src/com/iota/iri/network/Node.java
 +++ src/com/iota/iri/network/Node.java
-@@ -648,6 +648,7 @@
+@@ -650,6 +650,7 @@
      public void shutdown() throws InterruptedException {
          shuttingDown.set(true);
          executor.awaitTermination(6, TimeUnit.SECONDS);

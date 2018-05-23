@@ -64,9 +64,9 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>com.github.javiEstrella</groupId>
+									<groupId>com.github.trustingiot</groupId>
 									<artifactId>iri</artifactId>
-									<version>v1.4.2.2.src</version>
+									<version>master</version>
 									<classifier>sources</classifier>
 								</artifactItem>
 							</artifactItems>

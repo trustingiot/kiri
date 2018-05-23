@@ -25,7 +25,7 @@ import jota.utils.Converter;
 public class PeriodicCoordinator implements Loggable {
 
 	public static final String NULL_HASH = "999999999999999999999999999999999999999999999999999999999999999999999999999999999";
-	public static final String TESTNET_COORDINATOR_ADDRESS = "XNZBYAST9BETSDNOVQKKTBECYIPMF9IPOZRWUPFQGVH9HJW9NDSQVIPVBWU9YKECRYGDSJXYMZGHZDXCA";
+	public static final String TESTNET_COORDINATOR_ADDRESS = "EQQFCZBIHRHWPXKMTOLMYUYPCN9XLMJPYZVFJSAY9FQHCCLWTOLLUGKKMXYFDBOOYFBLBI9WUEILGECYM";
 	public static final String NULL_ADDRESS = "999999999999999999999999999999999999999999999999999999999999999999999999999999999";
 	public static final int TAG_TRINARY_SIZE = 81;
 
@@ -57,14 +57,16 @@ public class PeriodicCoordinator implements Loggable {
 			if (IRI.isInitialized()) {
 				try {
 					GetNodeInfoResponse nodeInfo = api.getNodeInfo();
-					int updatedMilestone = nodeInfo.getLatestMilestoneIndex() + 1;
+					int updatedMilestone = nodeInfo.getLatestMilestoneIndex();
 					if (nodeInfo.getLatestMilestone().equals(NULL_HASH)) {
-						newMilestone(api, NULL_HASH, NULL_HASH, updatedMilestone);
+						createMilestone(api, NULL_HASH, NULL_HASH, updatedMilestone + 1);
+						createMilestone(api, NULL_HASH, NULL_HASH, updatedMilestone + 2);
+					} else if (nodeInfo.getLatestSolidSubtangleMilestone().equals(NULL_HASH)) {
+						createMilestone(api, NULL_HASH, NULL_HASH, updatedMilestone + 1);
 					} else {
 						GetTransactionsToApproveResponse x = api.getTransactionsToApprove(10);
-						newMilestone(api, x.getTrunkTransaction(), x.getBranchTransaction(), updatedMilestone);
+						createMilestone(api, x.getTrunkTransaction(), x.getBranchTransaction(), updatedMilestone + 1);
 					}
-					info("New milestone " + updatedMilestone + " created.");
 				} catch (Exception e) {
 					error(e.getLocalizedMessage(), e);
 				}
@@ -72,6 +74,11 @@ public class PeriodicCoordinator implements Loggable {
 
 			executor.schedule(this::generateMilestone, interval, TimeUnit.SECONDS);
 		}
+	}
+
+	protected void createMilestone(IotaAPI api, String tip1, String tip2, long index) throws Exception {
+		newMilestone(api, tip1, tip2, index);
+		info("New milestone " + index + " created.");
 	}
 
 	static void newMilestone(IotaAPI api, String tip1, String tip2, long index) throws Exception {

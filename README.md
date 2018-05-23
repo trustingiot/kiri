@@ -7,17 +7,21 @@ Private IOTA testnet in Kura.
      * Used as submodule.
  * https://github.com/jserv/rocksdb: A Persistent Key-Value Store for Flash and RAM Storage.
      * Rocksdb armv7 5.7.3 has been compiled using this code.
-     * BUILD.sh has been adapted to compile it in Raspberry PI 2 B -> https://github.com/trustingiot/rocksdb/pull/1
  * https://github.com/iotaledger/iri: IOTA Reference Implementation.
      * org.eclipse.kura.iri is compiled using a patched version of this code.
      * Maven source plugin has been added to its configuration -> https://github.com/trustingiot/iri/pull/1
+
+## Versions
+
+ * Kura: 3.3.0 - develop (2018.05.21)
+ * IRI: 1.4.2.4 - master (2018.05.02)
 
 ## Plugins
 
  * org.eclipse.kura.kiri: Service to manage IRI lifecycle.
  * org.eclipse.kura.kiri.iri: Patched version of IRI to deploy private IOTA testnet.
  * org.eclipse.kura.kiri.rocksdb.jni: Rocksdb JNI 5.7.3.
- * org.eclipse.kura.kiri.rocksdb.armv7a: Rocksdb armv7a 5.8.8 (https://github.com/trustingiot/rocksdb).
+ * org.eclipse.kura.kiri.rocksdb.armv7a: Rocksdb armv7a 5.8.8.
 
 ## Features
 
@@ -32,11 +36,13 @@ Private IOTA testnet in Kura.
  * build-dp.sh: Create the deployable packages.
 
 ## Demo
- 
- * org.eclipse.kura.kiri.feature.armv7a_1.0.0-SNAPSHOT.dp: Deployable package for armv7a version.
- * org.eclipse.kura.kiri.feature.jni_1.0.0-SNAPSHOT.dp: Deployable package for jni version.
- * Snapshot.sig: IOTA snapshot used in the deployable packages.
- * Snapshot.log: Log of snapshot creation (the seed is in this file).
+
+ * 1.4.2.4.armv7a_1.0.0-SNAPSHOT.dp: Deployable package for armv7a version. IRI 1.4.2.4 & Kura 3.3.0.
+ * 1.4.2.4.jni_1.0.0-SNAPSHOT.dp: Deployable package for jni version. IRI 1.4.2.4 & Kura 3.3.0.
+ * 1.4.2.2.armv7a_1.0.0-SNAPSHOT.dp: Deployable package for armv7a version. IRI 1.4.2.2 & Kura 3.2.0.
+ * 1.4.2.2.jni_1.0.0-SNAPSHOT.dp: Deployable package for jni version. IRI 1.4.2.2 & Kura 3.2.0.
+ * snapshotTestnet.txt: IOTA snapshot used in the deployable packages.
+ * snapshotTestnet.sig: Log of snapshot creation (the seed is in this file).
 
 ## Step by step
 

@@ -6,7 +6,7 @@
 /src/
 logback.xml
 previousEpochsSpentAddresses.*
-Snapshot.txt
-Snapshot.log
+snapshotTestnet.txt
+snapshotTestnet.log
 !/resources/base/*
-/resources/base/Snapshot.*
+/resources/base/snapshotTestnet.*

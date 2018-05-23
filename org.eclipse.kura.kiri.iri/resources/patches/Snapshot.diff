@@ -1,39 +1,26 @@
 --- src/com/iota/iri/Snapshot.java
 +++ src/com/iota/iri/Snapshot.java
-@@ -36,9 +36,10 @@
- 
-     static {
- 
--        if (!SignedFiles.isFileSignatureValid("/Snapshot.txt", "/Snapshot.sig", SNAPSHOT_PUBKEY, SNAPSHOT_PUBKEY_DEPTH, SNAPSHOT_INDEX)) {
--            throw new RuntimeException("Snapshot signature failed.");
--        }
-+        // FIXME Kiri
-+        // if (!SignedFiles.isFileSignatureValid("/Snapshot.txt", "/Snapshot.sig", SNAPSHOT_PUBKEY, SNAPSHOT_PUBKEY_DEPTH, SNAPSHOT_INDEX)) {
-+        //     throw new RuntimeException("Snapshot signature failed.");
-+        // }
- 
-         InputStream in = Snapshot.class.getResourceAsStream("/Snapshot.txt");
-         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-@@ -55,19 +56,19 @@
-             }
-         } catch (IOException e) {
-             System.out.println("Failed to load snapshot.");
+@@ -56,7 +56,6 @@
+     private static void checkInitialSnapshotIsConsistent(Map<Hash, Long> initialState) {
+         if (!isConsistent(initialState)) {
+             log.error("Initial Snapshot inconsistent.");
 -            System.exit(-1);
-+            // TODO kiri System.exit(-1);
-         }
- 
-         initialSnapshot = new Snapshot(initialState, 0);
-         long stateValue = initialState.values().stream().reduce(Math::addExact).orElse(Long.MAX_VALUE);
-         if(stateValue != TransactionViewModel.SUPPLY) {
-             log.error("Transaction resolves to incorrect ledger balance: {}", TransactionViewModel.SUPPLY - stateValue);
--            System.exit(-1);
-+            // TODO kiri System.exit(-1);
-         }
- 
-         if(!isConsistent(initialState)) {
-             System.out.println("Initial Snapshot inconsistent.");
--            System.exit(-1);
-+            // TODO kiri System.exit(-1);
          }
      }
  
+@@ -64,7 +63,6 @@
+         long stateValue = initialState.values().stream().reduce(Math::addExact).orElse(Long.MAX_VALUE);
+         if (stateValue != TransactionViewModel.SUPPLY) {
+             log.error("Transaction resolves to incorrect ledger balance: {}", TransactionViewModel.SUPPLY - stateValue);
+-            System.exit(-1);
+         }
+     }
+ 
+@@ -88,7 +86,6 @@
+             //syso is left until logback is fixed
+             System.out.println("Failed to load snapshot.");
+             log.error("Failed to load snapshot.", e);
+-            System.exit(-1);
+         }
+         finally {
+             IOUtils.closeQuietly(reader);
