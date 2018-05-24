@@ -35,15 +35,6 @@ Private IOTA testnet in Kura.
  * build-snapshot.sh: Create IOTA snapshot.
  * build-dp.sh: Create the deployable packages.
 
-## Demo
-
- * 1.4.2.4.armv7a_1.0.0-SNAPSHOT.dp: Deployable package for armv7a version. IRI 1.4.2.4 & Kura 3.3.0.
- * 1.4.2.4.jni_1.0.0-SNAPSHOT.dp: Deployable package for jni version. IRI 1.4.2.4 & Kura 3.3.0.
- * 1.4.2.2.armv7a_1.0.0-SNAPSHOT.dp: Deployable package for armv7a version. IRI 1.4.2.2 & Kura 3.2.0.
- * 1.4.2.2.jni_1.0.0-SNAPSHOT.dp: Deployable package for jni version. IRI 1.4.2.2 & Kura 3.2.0.
- * snapshotTestnet.txt: IOTA snapshot used in the deployable packages.
- * snapshotTestnet.sig: Log of snapshot creation (the seed is in this file).
-
 ## Step by step
 
 Kura repository must be in folder <parent>/kura -> https://trustingiot.com/2018/02/02/building-deployment-packages-for-kura/
