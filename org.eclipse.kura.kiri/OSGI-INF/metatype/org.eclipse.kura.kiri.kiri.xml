@@ -2,7 +2,7 @@
 <MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.2.0" localization="en_us">
 	<OCD id="org.eclipse.kura.kiri.kiri"
 		name="kIRI"
-		description="Dirty way for invoking Kiri's actions (It'll be replaced by a customized website) ">
+		description="Dirty way for invoking actions of Kiri (It will be replaced by a customized website) ">
 
 		<Icon resource="resources/icons/kiri.png" size="32"/>
 

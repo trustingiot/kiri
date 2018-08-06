@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.2.0" localization="en_us">
 	<OCD id="org.eclipse.kura.kiri.iri"
-		name="IRI 1.4.2.4"
+		name="IRI 1.5.3"
 		description="IOTA Reference Implementation">
 
 		<Icon resource="resources/icons/iri.png" size="32"/>

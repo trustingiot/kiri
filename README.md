@@ -14,7 +14,7 @@ Private IOTA testnet in Kura.
 ## Versions
 
  * Kura: 3.3.0 - develop (2018.05.21)
- * IRI: 1.4.2.4 - master (2018.05.02)
+ * IRI: 1.5.3 - master (2018.08.02)
 
 ## Plugins
 

@@ -167,7 +167,7 @@ public class IRIServiceProvider implements IRIService, ActionRecorder, Configura
 					"--send-limit", options.getSendLimit(),
 					"--max-peers", options.getMaxPeers().toString() };
 			IRI.main(args);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			connected = false;
 			iriHandle = null;
 			iriWorker.shutdown();
